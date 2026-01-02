@@ -1,0 +1,4 @@
+node_modules/
+.env
+expediente-medico-backend/
+public/
