@@ -57,10 +57,10 @@ exports.updatePaciente = async (req, res) => {
       WHERE id = $9
     `, [
       nombre,
-      edad === "" ? null : edad,
+      edad === "" || edad === null ? null : Number(edad),
       sexo || null,
-      peso === "" ? null : peso,
-      altura === "" ? null : altura,
+      peso === "" || peso === null ? null : Number(peso),
+      altura === "" || altura === null ? null : Number(altura),
       tutor || null,
       telefono || null,
       info || null,
@@ -73,6 +73,7 @@ exports.updatePaciente = async (req, res) => {
     res.status(500).json({ error: "Error al actualizar paciente" });
   }
 };
+
 
 // ===============================
 // CREAR PACIENTE
@@ -90,10 +91,10 @@ exports.createPaciente = async (req, res) => {
       VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
     `, [
       nombre,
-      edad === "" ? null : edad,
+      edad === "" || edad === null ? null : Number(edad),
       sexo || null,
-      peso === "" ? null : peso,
-      altura === "" ? null : altura,
+      peso === "" || peso === null ? null : Number(peso),
+      altura === "" || altura === null ? null : Number(altura),
       tutor || null,
       telefono || null,
       info || null
