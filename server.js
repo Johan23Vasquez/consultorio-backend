@@ -5,7 +5,6 @@ require("dotenv").config();
 const express = require("express");
 const bodyParser = require("body-parser");
 const cors = require("cors");
-const path = require("path");
 
 const pacientesRoutes = require("./routes/pacientes");
 const historiaClinicaRoutes = require("./routes/historia");
@@ -13,25 +12,30 @@ const notasRoutes = require("./routes/notas");
 
 const app = express();
 
-// Middlewares
+// ===============================
+// MIDDLEWARES
+// ===============================
 app.use(cors());
 app.use(bodyParser.json());
 
-// Archivos estáticos
-app.use(express.static(path.join(__dirname, "public")));
-
-// Rutas API
+// ===============================
+// RUTAS API
+// ===============================
 app.use("/api/pacientes", pacientesRoutes);
 app.use("/api/historia-clinica", historiaClinicaRoutes);
 app.use("/api/notas", notasRoutes);
 
-// Página principal
+// ===============================
+// HEALTH CHECK
+// ===============================
 app.get("/", (req, res) => {
-  res.sendFile(path.join(__dirname, "public", "pacientes.html"));
+  res.json({ status: "API Consultorio funcionando ✅" });
 });
 
-// Servidor
-const PORT = process.env.PORT || 5000;
+// ===============================
+// SERVIDOR
+// ===============================
+const PORT = process.env.PORT || 10000;
 app.listen(PORT, () => {
-  console.log(`Servidor corriendo en http://localhost:${PORT}`);
+  console.log(`Servidor corriendo en puerto ${PORT}`);
 });
