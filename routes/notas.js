@@ -44,6 +44,7 @@ router.post("/", async (req, res) => {
         fecha,
         edad,
         peso,
+        pc,
         rc,
         rr,
         temperatura,
@@ -58,7 +59,7 @@ router.post("/", async (req, res) => {
         tratamiento
       )
       VALUES (
-        $1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16
+        $1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17
       )
       `,
       [
@@ -66,6 +67,7 @@ router.post("/", async (req, res) => {
         n.fecha,
         n.edad === "" ? null : Number(n.edad),
         n.peso === "" ? null : Number(n.peso),
+        n.pc === "" ? null : Number(n.pc),
         n.rc || null,
         n.rr || null,
         n.temperatura || null,
