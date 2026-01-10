@@ -39,28 +39,50 @@ router.post("/", async (req, res) => {
 
     await pool.query(
       `
-      INSERT INTO notas_medicas
-      (paciente_id, fecha, edad, rc, rr, temperatura, ta, sat_o2,
-       padecimiento, diagnostico, tratamiento)
-      VALUES
-      ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11)
+      INSERT INTO notas_medicas (
+        paciente_id,
+        fecha,
+        edad,
+        peso,
+        rc,
+        rr,
+        temperatura,
+        ta,
+        sat_o2,
+        vacunas,
+        alimentacion,
+        edi,
+        padecimiento,
+        exploracion_fisica,
+        diagnostico,
+        tratamiento
+      )
+      VALUES (
+        $1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16
+      )
       `,
       [
         Number(n.paciente_id),
         n.fecha,
-        n.edad ? Number(n.edad) : null,
-        n.rc ? Number(n.rc) : null,
-        n.rr ? Number(n.rr) : null,
-        n.temperatura ? Number(n.temperatura) : null,
+        n.edad === "" ? null : Number(n.edad),
+        n.peso === "" ? null : Number(n.peso),
+        n.rc || null,
+        n.rr || null,
+        n.temperatura || null,
         n.ta || null,
-        n.sat_o2 ? Number(n.sat_o2) : null,
+        n.sat_o2 || null,
+        n.vacunas || null,
+        n.alimentacion || null,
+        n.edi || null,
         n.padecimiento || "",
+        n.exploracion_fisica || "",
         n.diagnostico || "",
         n.tratamiento || ""
       ]
     );
 
     res.json({ message: "Nota médica creada" });
+
   } catch (error) {
     console.error("❌ Error crear nota:", error);
     res.status(500).json({ error: "Error al crear nota médica" });
