@@ -120,4 +120,33 @@ router.get("/ultima/:paciente_id", async (req, res) => {
   }
 });
 
+/* ===============================
+   OBTENER NOTA POR ID
+================================ */
+router.get("/id/:id", async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    const result = await pool.query(
+      `
+      SELECT *
+      FROM notas_medicas
+      WHERE id = $1
+      `,
+      [id]
+    );
+
+    if (result.rows.length === 0) {
+      return res.status(404).json({ error: "Nota médica no encontrada" });
+    }
+
+    res.json(result.rows[0]);
+
+  } catch (error) {
+    console.error("❌ Error obtener nota por ID:", error);
+    res.status(500).json({ error: "Error al obtener nota médica" });
+  }
+});
+
+
 module.exports = router;
