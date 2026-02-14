@@ -128,3 +128,27 @@ exports.buscarPacientes = async (req, res) => {
     res.status(500).json({ error: "Error al buscar pacientes" });
   }
 };
+
+
+// ===============================
+// BORRAR PACIENTES
+// ===============================
+
+exports.deletePaciente = async (req, res) => {
+  try {
+
+    const { id } = req.params;
+
+    await pool.query(
+      "DELETE FROM pacientes WHERE id = $1",
+      [id]
+    );
+
+    res.json({ message: "Paciente eliminado correctamente" });
+
+  } catch (error) {
+    console.error("❌ Error eliminar paciente:", error);
+    res.status(500).json({ error: "Error al eliminar paciente" });
+  }
+};
+
